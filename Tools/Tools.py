@@ -134,7 +134,7 @@ PUT COMMANDS INSIDE THE command FIELD!
             return None
         elif command.startswith("msg"):
             print("Agent: " + command.split("msg ")[1])
-            new_prompt = input()
+            new_prompt = input("User Input: ")
             return f"Sent message to User: {command.split('msg ')[1]}\nUser: {new_prompt}"
         else:
             # If it is not a known command, just try running it in the terminal (the llm likes dropping "shell" a lot)
