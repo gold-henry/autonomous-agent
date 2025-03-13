@@ -20,3 +20,11 @@ Next:
     - create "projects" to work on
     - multiple agents for different projects, possibly have a single controller agent
     - security - having a screening agent.
+
+
+Bugs:
+Make instructions clearer, about what the agent has access too at a given time
+When commands are not run correctly it is not added to context.
+
+shell tool needs to update context correctly
+

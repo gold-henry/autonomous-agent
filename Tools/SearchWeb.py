@@ -1,4 +1,4 @@
-from typing import List, Tuple
+from typing import List, Tuple, Dict
 from urllib.parse import urlparse
 import requests
 from bs4 import BeautifulSoup
@@ -11,75 +11,38 @@ class SearchWeb:
         self.current_page_text = None
         self.current_page_links = None
         self.search_results_links = []
-        self.instructions = """s
-Think about what you want to do, then use a command.
+        self.display_header = "\nWeb Display:\n"
+        self.display_body = "None"
+        self.display = self.display_header + self.display_body
 
-INSIDE WEB MODE:
-(to use commands, wrap them inside of ```tool_block ```
+    def _update_display(self, body):
+        self.display_body = body
+        self.display = self.display_header + self.display_body
+        return
 
-Available Commands:
-visit <url> - visits a website at a specific url
-get_links - get all url links on the current page:
-search <query> - performs a google search
-get_search_links - Gets the list of available links from the last search
-exit - Exits search mode, lets you access other modes, like SHELL
-
-Examples:
-
-```tool_block
-search dogs
-
-Examples:
-
-```tool_block
-search dogs
-```
-
-```tool_block
-visit https://www.google.com/search?q=dogs
-```
-
-```tool_block
-get_links
-```
-"""
-
-
-    def google_search(self, query: str, num_results: int = 5) -> str:
-        """
-        Performs a Google search and returns a string of the top result URLs.
-
-        Args:
-            query: The search query string.
-            num_results: The number of top results to fetch.
-
-        Returns:
-            A string containing the URLs of the search results.
-        """
+    # Update the display, returns context
+    def google_search(self, query: str) -> str:
         try:
             print(f"Searching Google for: {query}")
-            search_results = search(query, num_results=num_results)
+            search_results = search(query, stop=10)
             self.search_results_links = list(search_results)
-            # Return the search results urls
-            return "\n".join(self.search_results_links)
+
+            # Update the display
+            self._update_display("\n".join(self.search_results_links))
+
+            # Return the message for context
+            return f"\n Google Searched {query} and found {len(self.search_results_links)} results:\n"
         except Exception as e:
             return f"Error during Google search: {e}"
 
+    # Update the display, returns context
     def get_search_results_links(self) -> str:
         if not self.search_results_links:
             return "Error: No previous search results found."
-        return "\n".join(self.search_results_links)
+        self._update_display("\n".join(self.search_results_links))
+        return "Displayed results of search"
 
     def visit_url(self, url: str) -> str:
-        """
-        Visits a URL, downloads its HTML, and extracts plain text and links.
-
-        Args:
-            url: The URL to visit.
-
-        Returns:
-            A message indicating success or an error message.
-        """
         try:
             # Check if the URL is a Google search results page
             parsed_url = urlparse(url)
@@ -104,7 +67,10 @@ get_links
             ]
 
             self.current_page_url = url
-            print("Successfully visited and processed URL")
+
+            self._update_display(f"{self.current_page_url} is the current page. Use get_text command to see the page text. Use get_links command to see the page links.")
+
+            print("Successfully visited and processed URL.")
             return f"Successfully visited and processed URL: {url}"
 
         except requests.exceptions.RequestException as e:
@@ -131,34 +97,30 @@ get_links
         if not self.current_page_links:
             return "No links found on this page"
 
-        return "\n".join(self.current_page_links)
+        self._update_display("\n".join(self.current_page_links))
 
-    # Returns Context and Display
-    def route_command(self, command: str) -> Tuple[str, str]:
-        parts = command.split(" ", 1)
-        cmd = parts[0]
-        arg = parts[1] if len(parts) > 1 else None
+        return f"Displayed page links for {self.current_page_url}"
+    
+    def get_text(self) -> str:
+        if self.current_page_text is None:
+            return "Error: No text found on this page."
+        if not self.current_page_text:
+            return "No text found on this page"
 
-        if cmd == "visit":
-            msg = self.visit_url(arg)
-            if self.current_page_url and self.current_page_text:
-                return [
-                    f"Visited {self.current_page_url} using search mode.",
-                    f"DISPLAY OUTPUT:\n{self.current_page_text}",
-                ]
-            else:
-                return [f"Failed to visit URL: {arg}. {msg}", ""]
-        elif cmd == "get_search_links":
-            links = self.get_search_results_links()
-            return [f"Retrieved the last search result links.", f"Search Links:\n{links}"]
-        elif cmd == "get_links":
-            links = self.get_links()
-            return ["Retrieved links from current page.", f"LINKS:\n{links}"]
-        elif cmd == "search":
-            if arg:
-                search_results = self.google_search(arg)
-                return [f"Searched Google for: {arg}", f"Search Results:\n{search_results}"]
-            else:
-                return ["Error: No search query provided.", ""]
-        else:
-            return [f"Error: Unknown command '{cmd}' in search mode.", ""]
+        self._update_display(self.current_page_text)
+
+        return f"Displayed page text for {self.current_page_url}"
+    
+    def get_url(self) -> str:
+        if self.current_page_url is None:
+            return "Error: No current url found."
+        if not self.current_page_url:
+            return "No current url found"
+
+        self._update_display("\n".join(self.current_page_url))
+
+        return f"Displayed the url: {self.current_page_url}"
+    
+    def close_display(self):
+        self._update_display("None")
+        return "Closed web display"
