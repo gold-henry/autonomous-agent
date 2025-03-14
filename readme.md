@@ -1,4 +1,4 @@
-# Winter-AI
+# WinterAI
 
 ## Project Description
 
