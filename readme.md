@@ -2,7 +2,9 @@
 
 ## Project Description
 
-This Autonomous Agent program can perform tasks generally on your computer.
+Super simple early version of a Manus-like agent.
+
+WinterAI can perform tasks generally on your computer.
 
 - **Agent:** Core agent logic (`Agent/Agent.py`) for decision-making and task execution.
 - **Tools:** A collection of tools (`Tools/`) for specific actions like web searching (`Tools/SearchWeb.py`), shell commands (`Tools/ShellTool.py`), note-taking (`Tools/Notes.py`), and checklist management (`Tools/Checklist.py`).
