@@ -1,10 +1,12 @@
+import asyncio
 from Tools.SearchWeb import SearchWeb
 from Tools.ShellTool import ShellTool
 from Tools.Checklist import Checklist
 from Tools.Notes import Notes
+from Tools.BrowserAgent import BrowserAgent
 
 class tools:
-    def __init__(self):
+    def __init__(self, broswer_path, api_key):
         self.instructions = """
 Commands:
 
@@ -17,15 +19,7 @@ Most of your work can be completed with linux commands.
 Remember to include "shell" before the command, or else the command will not be found.
 
 Web Commands:
-    web search <query> - performs a google search and displays the links
-    web get_search_links - displays the links of the previous search
-    web visit <url> - sets the current web page
-    web get_page_text - displays the text of the current web page
-    web get_page_links - displays the links of the current web page
-    web get_page_url - displays the url of the current web page
-    web close - closes the current web display
-
-Use the web to look up any information you do not already know. However this tool only works for simple html pages, since it uses curl under the hood.
+    make_research_agent <prompt> - creates a research agent that can access the web. In <prompt>, give it the information you want to find. All found information goes inside of Notes.
 
 Checklist Commands:
     checklist add <task> - adds a task to the checklist
@@ -59,14 +53,14 @@ Remember to use "shell" before your command
 PUT COMMANDS INSIDE THE command FIELD!
 """
         self.shell = ShellTool()
-        self.web = SearchWeb()
+        self.browserAgent = BrowserAgent(api_key)
         self.checklist = Checklist()
         self.notes = Notes()
-        self.display = f"{self.shell.display}\n{self.web.display}\n{self.checklist.display}\n{self.notes.display}"
+        self.display = f"{self.shell.display}\n{self.checklist.display}\n{self.notes.display}\nBrowser Agent:\n{self.browserAgent.ret}"
         return
     
     def _update_display(self):
-        self.display = f"{self.shell.display}\n{self.web.display}\n{self.checklist.display}\n{self.notes.display}"
+        self.display = f"{self.shell.display}\n{self.checklist.display}\n{self.notes.display}\nBrowser Agent:\n{self.browserAgent.ret}"
         return
 
     # runs command and updates display
@@ -82,26 +76,11 @@ PUT COMMANDS INSIDE THE command FIELD!
             self._update_display()
             # Return context
             return context
-        elif command.startswith("web"):
+        elif command.startswith("make_research_agent"):
             # Run command
-            if command.split("web ")[1].startswith("search"):
-                context = self.web.google_search(command.split("web search ")[1])
-            if command.split("web ")[1].startswith("visit"):
-                context = self.web.visit_url(command.split("web visit ")[1])
-            if command.split("web ")[1].startswith("get_search_links"):
-                context = self.web.get_search_results_links()
-            if command.split("web ")[1].startswith("get_page_links"):
-                context = self.web.get_links()
-            if command.split("web ")[1].startswith("get_page_text"):
-                context = self.web.get_text()
-            if command.split("web ")[1].startswith("get_page_url"):
-                context = self.web.get_url()
-            if command.split("web ")[1].startswith("close"):
-                context = self.web.close_display()
-            # Update display
-            self._update_display()
+            asyncio.run(self.browserAgent.run_browser_agent(command.split("make_research_agent ")[1]))
             # Return context
-            return context
+            return self.browserAgent.ret
         elif command.startswith("checklist"):
             # Run command
             if command.split("checklist ")[1].startswith("add"):

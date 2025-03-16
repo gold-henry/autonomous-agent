@@ -70,3 +70,5 @@ secrets.txt
 # OS or Editor things
 .DS_Store
 .vscode/
+
+browser_logs/
