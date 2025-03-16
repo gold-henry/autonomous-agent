@@ -7,7 +7,7 @@ Super simple early version of a Manus-like agent.
 WinterAI can perform tasks generally on your computer.
 
 - **Agent:** Core agent logic (`Agent/Agent.py`) for decision-making and task execution.
-- **Tools:** A collection of tools (`Tools/`) for specific actions like web searching (`Tools/SearchWeb.py`), shell commands (`Tools/ShellTool.py`), note-taking (`Tools/Notes.py`), and checklist management (`Tools/Checklist.py`).
+- **Tools:** A collection of tools (`Tools/`) for specific actions like web searching (`Tools/BrowserAgent.py`), shell commands (`Tools/ShellTool.py`), note-taking (`Tools/Notes.py`), and checklist management (`Tools/Checklist.py`).
 - **Gemini API:** Integration with the Gemini API (`Agent/gemini_api.py`).
 - **Context Management:** Handling context and requests/responses (`Agent/Context.py').
 
@@ -79,33 +79,6 @@ To set up and run this project, follow these steps:
    ```bash
    python main.py -n
    ```
-
-## Project Structure
-
-```
-Autonomous Agent/
-├── Agent/
-│   ├── __init__.py
-│   ├── Agent.py
-│   ├── context_data.txt
-│   ├── Context.py
-│   ├── gemini_api.py
-│   ├── Request.py
-│   ├── Response.py
-│   └── secrets.txt         # API Keys and secrets
-├── Tools/
-│   ├── __init__.py
-│   ├── checklist.json
-│   ├── Checklist.py
-│   ├── Notes.py
-│   ├── notes.txt
-│   ├── SearchWeb.py
-│   ├── ShellTool.py
-│   └── Tools.py
-├── .gitignore
-├── main.py
-└── todo.md
-```
 
 ## Usage
 
