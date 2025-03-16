@@ -115,6 +115,23 @@ PLEASE NOTE: Shell commands are inherently unsafe. The program will prompt you t
 
 The Agent can also message you to ask for further input.
 
+You also must approve new browser agents. 
+
+NOTE: Currently you must have all chrome instances closed before using the program. When the agent asks to start a new research agent, you must close the previous chrome window that was updated.
+
+## References
+
+browser_use used for web agents
+```bibtex
+@software{browser_use2024,
+  author = {Müller, Magnus and Žunič, Gregor},
+  title = {Browser Use: Enable AI to control your browser},
+  year = {2024},
+  publisher = {GitHub},
+  url = {https://github.com/browser-use/browser-use}
+}
+```
+
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details.
