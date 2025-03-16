@@ -1,12 +1,11 @@
 import asyncio
-from Tools.SearchWeb import SearchWeb
 from Tools.ShellTool import ShellTool
 from Tools.Checklist import Checklist
 from Tools.Notes import Notes
 from Tools.BrowserAgent import BrowserAgent
 
 class tools:
-    def __init__(self, broswer_path, api_key):
+    def __init__(self, api_key):
         self.instructions = """
 Commands:
 
@@ -78,7 +77,11 @@ PUT COMMANDS INSIDE THE command FIELD!
             return context
         elif command.startswith("make_research_agent"):
             # Run command
-            asyncio.run(self.browserAgent.run_browser_agent(command.split("make_research_agent ")[1]))
+            if (input("Create a research agent (y/n): ") == "y"):
+                asyncio.run(self.browserAgent.run_browser_agent(command.split("make_research_agent ")[1] + " Do not use any AI tools in your research."))
+            else:
+                reason = input("Provide optional reason for denial: ")
+                return "User denied creation of browser agent because: " + reason
             # Return context
             return self.browserAgent.ret
         elif command.startswith("checklist"):

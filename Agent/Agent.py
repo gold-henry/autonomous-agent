@@ -31,7 +31,7 @@ class Agent:
         """
         self.gemini_api = GeminiAPI()
         self.context = Context()
-        self.tools = tools('/usr/bin/google-chrome', self.gemini_api._load_api_key())
+        self.tools = tools(self.gemini_api._load_api_key())
         print("Agent initialized.")
 
     def _update_context(self, user_directive: str, agent_response: str, tool_output: str):

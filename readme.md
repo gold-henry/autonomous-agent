@@ -34,14 +34,40 @@ To set up and run this project, follow these steps:
    GEMINI_API_KEY=YOUR_GEMINI_API_KEY
    ```
 
-3. **Install Dependencies:**
+3. **Add Browser Path:**
+   - Open the `Agent/secrets.txt` file.
+   - Add your browser path.
+
+   ```txt
+   # Example secrets.txt
+   BROWSER_LOCATION=/usr/bin/google-chrome
+   ```
+
+   - Common paths include:
+
+   Linux:
+   ```bash
+   /usr/bin/google-chrome
+   ```
+
+   Windows:
+   ```bash
+   C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe
+   ```
+
+   MacOS:
+   ```bash
+   /Applications/Google Chrome.app/Contents/MacOS/Google Chrome
+   ```
+
+4. **Install Dependencies:**
    - Use `pip` to install required dependencies with version ranges specified in `requirements.txt`.
 
    ```bash
    pip install -r requirements.txt
    ```
 
-4. **Run the Agent:**
+5. **Run the Agent:**
    - To run the autonomous agent, execute the main script (`main.py`).
 
    ```bash

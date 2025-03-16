@@ -38,6 +38,8 @@ class BrowserAgent:
             )
         )
 
+        self.api_key = api_key
+
         self.controller = controller = Controller()
 
         @controller.action('Always note relevant information with this tool.')
@@ -57,15 +59,29 @@ class BrowserAgent:
         return
 
     async def run_browser_agent(self, task) -> (str | None):
-        self.agent = agent = Agent(
+        self.agent = Agent(
             task=task,
             llm=self.llm,
+            planner_llm=self.llm,
+            planner_interval=3,
             browser=self.browser,
             use_vision=True,
             controller=self.controller,
             save_conversation_path="./Tools/browser_logs/conversation.txt",
         )
+
+        self.browser = Browser(
+            config=BrowserConfig(
+                chrome_instance_path= self._get_browser_location()
+            )
+        )
+
+        self.controller =  Controller()
+
+        self.llm = ChatGoogleGenerativeAI(model='gemini-2.0-flash', api_key=SecretStr(self.api_key))
+
         history = await self.agent.run()
+
         await self.browser.close()
         self.ret = history.final_result()
         return self.ret
