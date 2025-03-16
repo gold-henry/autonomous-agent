@@ -1,1 +1,0 @@
-Chosen Bitboards as the board representation for efficiency in move generation.

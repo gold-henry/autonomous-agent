@@ -62,11 +62,11 @@ PUT COMMANDS INSIDE THE command FIELD!
         self.web = SearchWeb()
         self.checklist = Checklist()
         self.notes = Notes()
-        self.display = self.shell.display + self.web.display + self.checklist.display + self.notes.display
+        self.display = f"{self.shell.display}\n{self.web.display}\n{self.checklist.display}\n{self.notes.display}"
         return
     
     def _update_display(self):
-        self.display = self.shell.display + self.web.display + self.checklist.display + self.notes.display
+        self.display = f"{self.shell.display}\n{self.web.display}\n{self.checklist.display}\n{self.notes.display}"
         return
 
     # runs command and updates display
@@ -75,7 +75,7 @@ PUT COMMANDS INSIDE THE command FIELD!
         if command.startswith("shell"):
             # Run command
             if command.split("shell ")[1].startswith("get_dir"):
-                context = self.shell.get_dir()
+                context = self.shell.get_current_directory()
             else:
                 context = self.shell.run_command(command.split("shell ")[1])
             # Update display

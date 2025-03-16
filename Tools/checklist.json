@@ -1,14 +1,1 @@
-{
-    "1": {
-        "task": "Implement bitboard representation and core operations (set, clear, get).",
-        "checked": true
-    },
-    "2": {
-        "task": "Implement move representation including source/dest squares, piece type, and move flags.",
-        "checked": true
-    },
-    "3": {
-        "task": "Implement game state representation including board, side to move, castling rights, en passant target, halfmove clock, fullmove number, and move history stack. with id 3",
-        "checked": false
-    }
-}
+{}

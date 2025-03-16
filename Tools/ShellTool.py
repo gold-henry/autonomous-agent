@@ -5,17 +5,11 @@ class ShellTool:
 
     def __init__(self):
         self.current_directory = os.getcwd()  # Initialize with current directory
-        self.display_header = "Terminal Output:\n"
-        self.display_body = "None"
-        self.display = self.display_header + self.display_body
-
-    def _update_display(self, body):
-        self.display_body = body
-        self.dipslay = self.display_header + self.display_body
+        self.display = "None"
 
     def get_current_directory(self):
         """Returns the current working directory."""
-        self._update_display(self.current_directory)
+        self.display = "Terminal: " + self.current_directory
         return ""
     
     def run_command(self, command: str):
@@ -31,9 +25,10 @@ class ShellTool:
                     text=True,
                     check=True,
                 )
-                self._update_display(result.stdout)
-                return f"{command}\n{result.stdout}"
+                self.display = "Terminal: \n" + result.stdout
+                return f"ran command {command}\n"
             except subprocess.CalledProcessError as e:
+                self.display = "Terminal: \n" + e.stderr
                 return f"Command \"{command}\" failed with error:\n{e.stderr}"
         else:
             return f"User denied running command: \"{command}\""
