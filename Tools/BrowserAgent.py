@@ -7,23 +7,6 @@ from Tools.Notes import Notes
 from dotenv import load_dotenv
 load_dotenv()
 
-task="""I'd like a thorough analysis of Tesla stock, including:
-
-Summary: Company overview, key metrics, performance data and investment recommendations
-Financial Data: Revenue trends, profit margins, balance sheet and cash flow analysis
-Market Sentiment: Analyst ratings, sentiment indicators and news impact
-Technical Analysis: Price trends, technical indicators and support/resistance levels
-Compare Assets: Market share and financial metrics vs. key competitors
-Value Investor: Intrinsic value, growth potential and risk factors
-Investment Thesis: SWOT analysis and recommendations for different investor types
-
-Please take notes in a file called notes.txt in the current directory
-Please use the linux command tool to create a html/css/js project in the current directory that displays the information you have gathered.
-
-Please search for new web resources if the ones you find do not work.
-Continue until the task is finished.
-"""
-
 class BrowserAgent:
     def __init__(self, api_key):
 
@@ -32,7 +15,7 @@ class BrowserAgent:
         self.browser = Browser(
             config=BrowserConfig(
                 # Specify the path to your Chrome executable
-                chrome_instance_path= self._get_browser_location(),  # macOS path
+                chrome_instance_path= self._get_browser_location(),
                 # For Windows, typically: 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe'
                 # For Linux, typically: '/usr/bin/google-chrome'
             )

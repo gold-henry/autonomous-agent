@@ -3,6 +3,7 @@ from Tools.ShellTool import ShellTool
 from Tools.Checklist import Checklist
 from Tools.Notes import Notes
 from Tools.BrowserAgent import BrowserAgent
+from Agent.CodeAgent.CodeAgent import CodeAgent
 
 class tools:
     def __init__(self, api_key):
@@ -19,6 +20,11 @@ Remember to include "shell" before the command, or else the command will not be 
 
 Web Commands:
     make_research_agent <prompt> - creates a research agent that can access the web. In <prompt>, give it the information you want to find. All found information goes inside of Notes.
+
+Code Commands:
+    make_coder_agent <prompt> - creates a coder agent that performs a coding task specified in <prompt>.
+
+IMPORTANT - New agents will provide a response when they finish running. If the agent is unable to complete the work, you can note the reason and update the prompt.
 
 Checklist Commands:
     checklist add <task> - adds a task to the checklist
@@ -55,6 +61,7 @@ PUT COMMANDS INSIDE THE command FIELD!
         self.browserAgent = BrowserAgent(api_key)
         self.checklist = Checklist()
         self.notes = Notes()
+        self.codeAgent = CodeAgent()
         self.display = f"{self.shell.display}\n{self.checklist.display}\n{self.notes.display}\nBrowser Agent:\n{self.browserAgent.ret}"
         return
     
@@ -81,9 +88,18 @@ PUT COMMANDS INSIDE THE command FIELD!
                 asyncio.run(self.browserAgent.run_browser_agent(command.split("make_research_agent ")[1] + " Do not use any AI tools in your research."))
             else:
                 reason = input("Provide optional reason for denial: ")
-                return "User denied creation of browser agent because: " + reason
+                return "User denied creation of browser agent: " + reason
             # Return context
             return self.browserAgent.ret
+        elif command.startswith("make_coder_agent"):
+            # Run command
+            if (input("Create a coder agent (y/n): ") == "y"):
+                context = self.codeAgent.call_agent(command.split("make_coder_agent ")[1])
+            else:
+                reason = input("Provide optional reason for denial: ")
+                return "User denied creation of coder agent: " + reason
+            # Return context
+            return context
         elif command.startswith("checklist"):
             # Run command
             if command.split("checklist ")[1].startswith("add"):

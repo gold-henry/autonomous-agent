@@ -4,13 +4,12 @@ import subprocess
 class ShellTool:
 
     def __init__(self):
-        self.current_directory = os.getcwd()  # Initialize with current directory
+        self.current_directory = os.getcwd() + "/Workspace"  # Initialize with current directory
         self.display = "None"
 
     def get_current_directory(self):
         """Returns the current working directory."""
         self.display = "Terminal: " + self.current_directory
-        return ""
     
     def run_command(self, command: str):
         """Runs a shell command."""
