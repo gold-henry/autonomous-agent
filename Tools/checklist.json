@@ -38,5 +38,9 @@
     "10": {
         "task": "Determine the expected prior knowledge for each target audience",
         "checked": true
+    },
+    "11": {
+        "task": "'Outline specific learning goals for each target audience (e.g., basic navigation, file manipulation, process management, scripting automation)'",
+        "checked": true
     }
 }

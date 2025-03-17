@@ -31,4 +31,5 @@ class ShellTool:
                 self.display = "Terminal: \n" + e.stderr
                 return f"Command \"{command}\" failed with error:\n{e.stderr}"
         else:
-            return f"User denied running command: \"{command}\""
+            reason = input("Provide optional reason for denial: ")
+            return f"User denied running command: \"{command}\":" + reason
