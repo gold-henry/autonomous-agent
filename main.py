@@ -18,12 +18,12 @@ def main():
             # Generate a prompt goal and list of actions
             thinking_api = GeminiAPI("gemini-2.0-flash")
             prompt = thinking_api.generate(f"Given the users prompt \"{user_prompt}\", brainstorm a list of what needs to be considered and what concrete steps need to be taken in order to achieve this goal. Output a new longer and significantly more detailed prompt. It should be worded like a command.")
-        else:
-            prompt = input("Provide initial prompt: ")
+    else:
+        prompt = input("Provide initial prompt: ")
 
     agent.call_agent(prompt)
     while(True):
-        time.sleep(20)
+        time.sleep(1)
         agent.call_agent()
 
     return

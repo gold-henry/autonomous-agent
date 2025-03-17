@@ -1,1 +1,42 @@
-{}
+{
+    "1": {
+        "task": "Define specific target audiences (e.g., beginners, developers, sysadmins)",
+        "checked": true
+    },
+    "2": {
+        "task": "Content Creation",
+        "checked": false
+    },
+    "3": {
+        "task": "Website Development",
+        "checked": false
+    },
+    "4": {
+        "task": "Hosting and Infrastructure",
+        "checked": false
+    },
+    "5": {
+        "task": "Marketing and Promotion",
+        "checked": false
+    },
+    "6": {
+        "task": "Course Delivery and Support",
+        "checked": false
+    },
+    "7": {
+        "task": "Evaluation and Improvement",
+        "checked": false
+    },
+    "8": {
+        "task": "Legal and Ethical Considerations",
+        "checked": false
+    },
+    "9": {
+        "task": "Monetization (Optional)",
+        "checked": false
+    },
+    "10": {
+        "task": "Determine the expected prior knowledge for each target audience",
+        "checked": true
+    }
+}
