@@ -139,5 +139,5 @@ PUT COMMANDS INSIDE THE command FIELD!
             context = self.shell.run_command(command)
             # Update display
             self._update_display()
-            return "Tried running command in terminal: " + command + "\n"
+            return context
     
