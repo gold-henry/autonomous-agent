@@ -92,6 +92,9 @@ You also must approve new browser agents.
 
 NOTE: Currently you must have all chrome instances closed before using the program. When the agent asks to start a new research agent, you must close the previous chrome window that was updated.
 
+You can use the ```bash -n ``` (new) flag to create a new agent.
+You can use the ```bash -e ``` (expand) flag to generate a more in depth prompt from your initial prompt.
+
 ## References
 
 browser_use used for web agents
